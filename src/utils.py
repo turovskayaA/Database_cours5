@@ -1,5 +1,9 @@
+import os
 import requests
 import psycopg2
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def get_employer(employers_id):
@@ -45,7 +49,7 @@ def create_table():
     """
     try:
         with psycopg2.connect(
-            host="localhost", database="course_work", user="postgres", password="12345"
+            host="localhost", database="course_work", user="postgres", password=os.getenv("PASSWORD")
         ) as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -74,7 +78,7 @@ def add_info_table(employers_list):
     """
     try:
         with psycopg2.connect(
-            host="localhost", database="course_work", user="postgres", password="12345"
+            host="localhost", database="course_work", user="postgres", password=os.getenv("PASSWORD")
         ) as conn:
             with conn.cursor() as cur:
                 for employer in employers_list:
