@@ -1,27 +1,17 @@
-import os
 import psycopg2
-from dotenv import load_dotenv
-
-
-load_dotenv()
 
 
 class DBManager:
 
-    def __init__(self):
-        pass
+    def __init__(self, params):
+        self.params = params
 
     def get_companies_and_vacancies_count(self):
         """
         Получает список всех компаний и количество вакансий у каждой компании.
         """
         try:
-            with psycopg2.connect(
-                host="localhost",
-                database="course_work",
-                user="postgres",
-                password=os.getenv("PASSWORD"),
-            ) as conn:
+            with psycopg2.connect(**self.params) as conn:
                 with conn.cursor() as cur:
                     cur.execute(
                         """SELECT name_company, open_vacancies
@@ -39,12 +29,7 @@ class DBManager:
         названия вакансии и зарплаты и ссылки на вакансию.
         """
         try:
-            with psycopg2.connect(
-                host="localhost",
-                database="course_work",
-                user="postgres",
-                password=os.getenv("PASSWORD"),
-            ) as conn:
+            with psycopg2.connect(**self.params) as conn:
                 with conn.cursor() as cur:
                     cur.execute(
                         """SELECT name_vacancy, name_company, salary, url
@@ -61,12 +46,7 @@ class DBManager:
         Получает среднюю зарплату по вакансиям.
         """
         try:
-            with psycopg2.connect(
-                host="localhost",
-                database="course_work",
-                user="postgres",
-                password=os.getenv("PASSWORD"),
-            ) as conn:
+            with psycopg2.connect(**self.params) as conn:
                 with conn.cursor() as cur:
                     cur.execute(
                         """SELECT AVG(salary) AS avg_salary
@@ -83,12 +63,7 @@ class DBManager:
         Получает список всех вакансий, у которых зарплата выше средней по всем вакансиям.
         """
         try:
-            with psycopg2.connect(
-                host="localhost",
-                database="course_work",
-                user="postgres",
-                password=os.getenv("PASSWORD"),
-            ) as conn:
+            with psycopg2.connect(**self.params) as conn:
                 with conn.cursor() as cur:
                     cur.execute(
                         """SELECT * FROM vacancy
@@ -106,12 +81,7 @@ class DBManager:
         содержатся переданные в метод слова.
         """
         try:
-            with psycopg2.connect(
-                host="localhost",
-                database="course_work",
-                user="postgres",
-                password=os.getenv("PASSWORD"),
-            ) as conn:
+            with psycopg2.connect(**self.params) as conn:
                 with conn.cursor() as cur:
                     cur.execute(
                         f"""SELECT name_vacancy, name_company

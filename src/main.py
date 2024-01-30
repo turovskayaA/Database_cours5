@@ -1,11 +1,14 @@
+from src.config import config
 from src.db_manager import DBManager
 from src.utils import create_table, add_info_table
 
 
 def main():
-    dbmanager = DBManager()
+    params = config()
+    employers_list = [4382297, 78638, 3529, 599, 1122462, 2324020, 815055, 41862, 67611, 2161785]
+    dbmanager = DBManager(params)
     create_table()
-    add_info_table()
+    add_info_table(employers_list)
 
     while True:
 
@@ -41,4 +44,6 @@ def main():
             print("Неправильный запрос")
 
 
-main()
+if __name__ == '__main__':
+    main()
+
